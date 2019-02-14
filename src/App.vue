@@ -74,5 +74,7 @@
 
 
 <style>
-
+  html {
+      background-color: #cacaca;
+  }
 </style>
