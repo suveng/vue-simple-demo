@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <input type="text" v-model='todo' @keydown="doAdd($event)" />
+    <input type="text" ref="todoinput" v-model='todo' @keydown="doAdd($event)" />
     <button @click="doAdd($event)"> 增加</button>
     <br>
     <hr>
@@ -39,6 +39,7 @@
         if (e.key === "Enter" || e instanceof(MouseEvent)) {
           let todo = {title: this.todo, finished: false};
           this.list.push(todo);
+          this.todo='';
         }
       },
       removeTodo(key) {
