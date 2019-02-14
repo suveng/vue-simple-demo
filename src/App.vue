@@ -24,6 +24,8 @@
 </template>
 
 <script>
+  import storage from './model/storage.js'
+
   export default {
     name: 'app',
     data() {
@@ -34,6 +36,9 @@
     },
     methods: {
       doAdd(e) {
+        if (!this.todo||!e){
+          return;
+        }
         console.log("增加todo");
         //  1.获取文本框的值
         //  2.把文本框的值push到list中
@@ -41,27 +46,28 @@
           let todo = {title: this.todo, finished: false};
           this.list.push(todo);
           this.todo = '';
-          //  对数据操作需要加入缓存；
-          localStorage.setItem("todoList", JSON.stringify(this.list));
+          this.saveTodoList();
         }
       },
       removeTodo(key) {
         console.log("删除todo");
         this.list.pop(key);
-        //  对数据操作需要加入缓存；
-        localStorage.setItem("todoList", JSON.stringify(this.list));
+        this.saveTodoList();
       },
       doFinishTodo(e) {
         console.log("完成todo");
-        this.list[e].finished = true;
+        this.list[e].finished = !this.list[e].finished;
+        this.saveTodoList();
+      },
+      saveTodoList(){
         //  对数据操作需要加入缓存；
-        localStorage.setItem("todoList", JSON.stringify(this.list));
+        storage.set("todoList",this.list);
       }
 
     },
     mounted() {
       // 加载todoList缓存
-      this.list = JSON.parse(localStorage.getItem("todoList"));
+      this.list = storage.get("todoList") ? storage.get("todoList") : [];
     }
   }
 </script>
