@@ -77,4 +77,8 @@
   html {
       background-color: #cacaca;
   }
+  div#app {
+      /* align-content: center; */
+      text-align: center;
+  }
 </style>
